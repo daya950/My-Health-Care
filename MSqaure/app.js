@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 
 //App Secret can be retrieved from the App Dashboard
-var APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
+/*var APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
 
@@ -41,7 +41,7 @@ var SERVER_URL = (process.env.SERVER_URL) ?
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
-}
+}*/
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
@@ -50,7 +50,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  */
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+      req.query['hub.verify_token'] === 'MY_CHAT_TOKEN') {
     console.log("Validating webhook");
     res.status(200).send(req.query['hub.challenge']);
   } else {
@@ -67,7 +67,7 @@ app.get('/webhook', function(req, res) {
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
-app.post('/webhook', function (req, res) {
+/*app.post('/webhook', function (req, res) {
   var data = req.body;
 
   // Make sure this is a page subscription
@@ -110,7 +110,7 @@ app.post('/webhook', function (req, res) {
  * This path is used for account linking. The account linking call-to-action
  * (sendAccountLinking) is pointed to this URL. 
  * 
- */
+ * /
 app.get('/authorize', function(req, res) {
   var accountLinkingToken = req.query.account_linking_token;
   var redirectURI = req.query.redirect_uri;
@@ -136,7 +136,7 @@ app.get('/authorize', function(req, res) {
  *
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
  *
- */
+ * /
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
 
@@ -166,7 +166,7 @@ function verifyRequestSignature(req, res, buf) {
  * Messenger" plugin, it is the 'data-ref' field. Read more at 
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
  *
- */
+ * /
 function receivedAuthentication(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -201,7 +201,7 @@ function receivedAuthentication(event) {
  * created. If we receive a message with an attachment (image, video, audio), 
  * then we'll simply confirm that we've received the attachment.
  * 
- */
+ * /
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -309,7 +309,7 @@ function receivedMessage(event) {
  * This event is sent to confirm the delivery of a message. Read more about 
  * these fields at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered
  *
- */
+ * /
 function receivedDeliveryConfirmation(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -335,7 +335,7 @@ function receivedDeliveryConfirmation(event) {
  * This event is called when a postback is tapped on a Structured Message. 
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  * 
- */
+ * /
 function receivedPostback(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -359,7 +359,7 @@ function receivedPostback(event) {
  * This event is called when a previously-sent message has been read.
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read
  * 
- */
+ * /
 function receivedMessageRead(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -379,7 +379,7 @@ function receivedMessageRead(event) {
  * tapped.
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference/account-linking
  * 
- */
+ * /
 function receivedAccountLink(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -394,7 +394,7 @@ function receivedAccountLink(event) {
 /*
  * Send an image using the Send API.
  *
- */
+ * /
 function sendImageMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -416,7 +416,7 @@ function sendImageMessage(recipientId) {
 /*
  * Send a Gif using the Send API.
  *
- */
+ * /
 function sendGifMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -438,7 +438,7 @@ function sendGifMessage(recipientId) {
 /*
  * Send audio using the Send API.
  *
- */
+ * /
 function sendAudioMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -460,7 +460,7 @@ function sendAudioMessage(recipientId) {
 /*
  * Send a video using the Send API.
  *
- */
+ * /
 function sendVideoMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -482,7 +482,7 @@ function sendVideoMessage(recipientId) {
 /*
  * Send a video using the Send API.
  *
- */
+ * /
 function sendFileMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -504,7 +504,7 @@ function sendFileMessage(recipientId) {
 /*
  * Send a text message using the Send API.
  *
- */
+ * /
 function sendTextMessage(recipientId, messageText) {
   var messageData = {
     recipient: {
@@ -522,7 +522,7 @@ function sendTextMessage(recipientId, messageText) {
 /*
  * Send a button message using the Send API.
  *
- */
+ * /
 function sendButtonMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -558,7 +558,7 @@ function sendButtonMessage(recipientId) {
 /*
  * Send a Structured Message (Generic Message type) using the Send API.
  *
- */
+ * /
 function sendGenericMessage(recipientId) {
   var messageData = {
     recipient: {
@@ -609,7 +609,7 @@ function sendGenericMessage(recipientId) {
 /*
  * Send a receipt message using the Send API.
  *
- */
+ * /
 function sendReceiptMessage(recipientId) {
   // Generate a random receipt ID as the API requires a unique ID
   var receiptId = "order" + Math.floor(Math.random()*1000);
@@ -675,7 +675,7 @@ function sendReceiptMessage(recipientId) {
 /*
  * Send a message with Quick Reply buttons.
  *
- */
+ * /
 function sendQuickReply(recipientId) {
   var messageData = {
     recipient: {
@@ -710,7 +710,7 @@ function sendQuickReply(recipientId) {
 /*
  * Send a read receipt to indicate the message has been read
  *
- */
+ * /
 function sendReadReceipt(recipientId) {
   console.log("Sending a read receipt to mark message as seen");
 
@@ -727,7 +727,7 @@ function sendReadReceipt(recipientId) {
 /*
  * Turn typing indicator on
  *
- */
+ * /
 function sendTypingOn(recipientId) {
   console.log("Turning typing indicator on");
 
@@ -744,7 +744,7 @@ function sendTypingOn(recipientId) {
 /*
  * Turn typing indicator off
  *
- */
+ * /
 function sendTypingOff(recipientId) {
   console.log("Turning typing indicator off");
 
@@ -761,7 +761,7 @@ function sendTypingOff(recipientId) {
 /*
  * Send a message with the account linking call-to-action
  *
- */
+ * /
 function sendAccountLinking(recipientId) {
   var messageData = {
     recipient: {
@@ -789,7 +789,7 @@ function sendAccountLinking(recipientId) {
  * Call the Send API. The message data goes in the body. If successful, we'll 
  * get the message id in a response 
  *
- */
+ * /
 function callSendAPI(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
@@ -824,3 +824,4 @@ app.listen(app.get('port'), function() {
 
 module.exports = app;
 
+*/
