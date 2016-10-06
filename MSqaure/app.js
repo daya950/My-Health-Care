@@ -15,20 +15,28 @@ var bodyParser = require('body-parser'),
 	request = require('request');
 
 function verifyRequestSignature(req, res, buf) {
+	console.log("OYE OYE "+req);
+	console.log("OYE OYE "+res);
+	console.log("OYE OYE "+buf);
 	var signature = req.headers["x-hub-signature"];
+	console.log(signature);
 	if (!signature) {
 		console.error("Couldn't validate the signature.");
 	} else {
 		var elements = signature.split('=');
-		var method = elements[0];
-		var signatureHash = elements[1];
+		console.log("OYE OYE "+elements);
+		var elements = elements[0];
+		var elements = elements[1];
 		var expectedHash = crypto.createHmac('sha1', APP_SECRET)
 		.update(buf)
 		.digest('hex');
 
-		if (signatureHash !== expectedHash) {
+		console.log(elements);
+		console.log(expectedHash);
+		
+		/*if (signatureHash !== expectedHash) {
 			throw new Error("Couldn't validate the request signature.");
-		}
+		}*/
 	}
 }
 
@@ -37,7 +45,6 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
-console.log('OYE OYE :'+process.env.PORT);
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
