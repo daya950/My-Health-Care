@@ -37,7 +37,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
-
+console.log('OYE OYE :'+process.env.PORT);
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
