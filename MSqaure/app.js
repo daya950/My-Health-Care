@@ -2,6 +2,8 @@
 /**
  * Module dependencies.
  */
+
+'use strict';
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
 
