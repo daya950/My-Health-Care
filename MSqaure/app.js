@@ -15,9 +15,6 @@ var bodyParser = require('body-parser'),
 	request = require('request');
 
 function verifyRequestSignature(req, res, buf) {
-	console.log("OYE OYE "+req);
-	console.log("OYE OYE "+res);
-	console.log("OYE OYE "+buf);
 	var signature = req.headers["x-hub-signature"];
 	console.log(signature);
 	if (!signature) {
@@ -25,8 +22,8 @@ function verifyRequestSignature(req, res, buf) {
 	} else {
 		var elements = signature.split('=');
 		console.log("OYE OYE "+elements);
-		var elements = elements[0];
-		var elements = elements[1];
+		var method = elements[0];
+		var signatureHash = elements[1];
 		var expectedHash = crypto.createHmac('sha1', APP_SECRET)
 		.update(buf)
 		.digest('hex');
@@ -61,5 +58,3 @@ app.get('/webhook', function(req, res) {
     res.sendStatus(403);          
   }  
 });
-
-module.exports = app;
