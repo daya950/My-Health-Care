@@ -127,11 +127,11 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message;
-	var data = {text : message, recid : recipientID};
+	var details = '{text : '+message+', recid : '+recipientID+'}';
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
 		method : 'POST',
-		json : data
+		body: JSON.stringify(details)
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
