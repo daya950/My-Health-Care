@@ -14,7 +14,7 @@ var bodyParser = require('body-parser'),
 	https = require('https'),  
 	request = require('request');
 
-function verifyRequestSignature(req, res, buf) {
+ /*function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 	console.log(signature);
 	if (!signature) {
@@ -31,16 +31,16 @@ function verifyRequestSignature(req, res, buf) {
 		console.log(elements);
 		console.log(expectedHash);
 		
-		/*if (signatureHash !== expectedHash) {
+		if (signatureHash !== expectedHash) {
 			throw new Error("Couldn't validate the request signature.");
-		}*/
+		}
 	}
-}
+}*/
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
+//app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
 /*
