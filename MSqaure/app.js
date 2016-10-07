@@ -130,9 +130,6 @@ function receivedMessage(event) {
 	var data = {text : message, recid : recipientID};
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
-		qs : {
-			access_token : PAGE_ACCESS_TOKEN
-		},
 		method : 'POST',
 		json : data
 	}, function(error, response, body) {
@@ -246,11 +243,12 @@ app.post('/webhook', function(req, res) {
 });
 
 
-/*
- * http.createServer(app).listen(app.get('port'), function() {
- * console.log('Express server listening on port ' + app.get('port')); });
- */
 
-app.listen(app.get('port'), function() {
+  http.createServer(app).listen(app.get('port'), function() {
+	  console.log('Express server listening on port ' + app.get('port'));
+  });
+ 
+
+/*app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
-});
+});*/
