@@ -137,14 +137,7 @@ function receivedMessage(event) {
 		json : data
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
-			var recipientId = body.recipient_id;
-			var messageId = body.message_id;
-
-			if (messageId) {
-				console.log("Successfully sent message with id %s to Salesforce Agent",	messageId, recipientId);
-			} else {
-				console.log("Something Wrong in receivedMessage Function");
-			}
+			console.log(error+"  "+response.statusCode);
 		} else {
 			console.error("Error Occured in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
 		}
