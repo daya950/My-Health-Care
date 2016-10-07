@@ -127,7 +127,7 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	var details = '{text : '+message+', recid : '+senderID+'}';
+	var details = '{"text" : '+message+', "recid" : '+senderID+'}';
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
 		method : 'POST',
