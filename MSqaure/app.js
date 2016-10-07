@@ -1,6 +1,6 @@
 'use strict';
-//var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
-//var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
+var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
+var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
 
 var bodyParser = require('body-parser'),
 	config = require('config'),
@@ -8,32 +8,6 @@ var bodyParser = require('body-parser'),
 	express = require('express'),
 	http = require('http'),  
 	request = require('request');
-
-//App Secret can be retrieved from the App Dashboard
-var APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
-  process.env.MESSENGER_APP_SECRET :
-  config.get('appSecret');
-
-// Arbitrary value used to validate a webhook
-var VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
-  (process.env.MESSENGER_VALIDATION_TOKEN) :
-  config.get('validationToken');
-
-// Generate a page access token for your page from the App Dashboard
-  var PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
-  (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
-  config.get('pageAccessToken');
-
-// URL where the app is running (include protocol). Used to point to scripts and 
-// assets located at this address. 
-var SERVER_URL = (process.env.SERVER_URL) ?
-  (process.env.SERVER_URL) :
-  config.get('serverURL');
-
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
-  console.error("Missing config values");
-  process.exit(1);
-}
 
  function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
