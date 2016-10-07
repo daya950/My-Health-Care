@@ -6,7 +6,7 @@ var bodyParser = require('body-parser'),
 	config = require('config'),
 	crypto = require('crypto'),
 	express = require('express'),
-	https = require('https'),  
+	http = require('http'),  
 	request = require('request');
 
 
@@ -56,3 +56,7 @@ app.get('/webhook', function(req, res) {
     res.sendStatus(403);          
   }  
 });
+
+http.createServer(app).listen(app.get('port'), function(){
+	  console.log('Express server listening on port ' + app.get('port'));
+	});
