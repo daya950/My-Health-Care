@@ -132,8 +132,8 @@ function receivedMessage(event) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function(error, response, body) {
-		console.log(response);
-		console.log(response.headers);
+		console.log('MMMMMM '+response);
+		console.log('NNNNNN '+response.headers);
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
 		} else {
