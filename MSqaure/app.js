@@ -113,6 +113,11 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
+function getMessageForFb(recId) {
+	
+}
+
+
 /*
  * Message Event
  * 
@@ -132,7 +137,7 @@ function receivedMessage(event) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function(error, response, body) {
-		console.log('MMMMMM '+response.status123);
+		//console.log('MMMMMM '+response.status123);
 		console.log('NNNNNN STATUS123 '+response.headers.status123);
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
@@ -140,6 +145,7 @@ function receivedMessage(event) {
 			console.error("Error Occured in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
 		}
 	});
+	getMessageForFb(senderID);
 }
 
 
