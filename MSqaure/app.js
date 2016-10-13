@@ -118,21 +118,13 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence,
 		method : 'GET'
 	}, function(error, response, body) {
-		console.log('XXXXXXXXXXXXXXXXXXXXX');
-		console.log(body);
-		console.log('YYYYYYYYYYYYYYYYYYYY');
 		if (!error && response.statusCode === 200) {
-			console.log('XXXXXXXXXXXXXXXXXXXXX');
-			console.log(body);
-			console.log('YYYYYYYYYYYYYYYYYYYY');
-			//sendTextMessage(recipient, response.headers.sfdcmsg);
-			//seq = response.headers.seq;
 			console.log("Message Sent");
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	//getMessageForFb(key, id, token, recId, seq);*/
+	//getMessageForFb(key, id, token, recipient, seq);
 }
 
 
