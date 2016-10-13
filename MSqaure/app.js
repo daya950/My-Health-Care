@@ -170,11 +170,9 @@ function receivedMessage(event) {
 		console.log("sendStatus : "+response.headers.sessionKey);
 		console.log("sendStatus : "+response.headers.sessionId);
 		console.log("sendStatus : "+response.headers.affinityToken);
-		console.log("sendStatus : "+response.headers.senderID);
-		console.log("sendStatus : "+response.headers.seq);
-		if (response.headers.sendStatus === '1') {
+		/*if (response.headers.sendStatus === '1') {
 			getMessageForFb(response.headers.sessionKey, response.headers.sessionId, response.headers.affinityToken, senderID, seq);
-		}
+		}*/
 		
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
