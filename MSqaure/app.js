@@ -114,30 +114,18 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function getMessageForFb(key, id, token, recipient, sequence) {
-	console.log('IIIIIIIIIIIIIIII');
-	console.log(key);
-	console.log(id);
-	console.log(token);
-	console.log(recipient);
-	console.log(sequence);
-	console.log('OOOOOOOOOOOOOOOO');
-	/*request({
+	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
 		method : 'GET',
-		body: '{"key" : '+key+', "id" : '+id+', "token" : '+token+', "recId" : '+recId+', "seq" : '+sequence+'}'
+		body: '{"key" : '+key+', "id" : '+id+', "token" : '+token+', "recId" : '+recipient+', "seq" : '+sequence+'}'
 
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 			console.log('XXXXXXXXXXXXXXXXXXXXX');
-			console.log(recId);
-			console.log(response.headers.sfdcmsg);
-			console.log(response.headers.Key);
-			console.log(response.headers.Id);
-			console.log(response.headers.AffinityToken);
-			console.log(response.headers.Seq);
+			console.log(body);
 			console.log('YYYYYYYYYYYYYYYYYYYY');
-			sendTextMessage(recId, response.headers.sfdcmsg);
-			seq = response.headers.seq;
+			//sendTextMessage(recipient, response.headers.sfdcmsg);
+			//seq = response.headers.seq;
 			console.log("Message Sent");
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
@@ -168,18 +156,7 @@ function receivedMessage(event) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function (error, response, body) {
-		console.log('XXXXXXXXXXXXXXXXXXXXX');
-		console.log(body.split('@COL@')[1]);
-		console.log(body.split('@COL@')[2]);
-		console.log(body.split('@COL@')[3]);
-		console.log(body.split('@COL@')[4]);
-		console.log(senderID);
-		console.log(seq);
-		console.log('YYYYYYYYYYYYYYYYYYYY');
 		if (body.split('@COL@')[1] === '1') {
-			console.log(body.split('@COL@')[2]);
-			console.log(body.split('@COL@')[3]);
-			console.log(body.split('@COL@')[4]);
 			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, seq);
 		}
 		
