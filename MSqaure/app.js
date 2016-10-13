@@ -166,13 +166,10 @@ function receivedMessage(event) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function (error, response, body) {
-		console.log("sendStatus : "+response.headers.sendStatus);
-		console.log("sendStatus : "+response.headers.sessionKey);
-		console.log("sendStatus : "+response.headers.sessionId);
-		console.log("sendStatus : "+response.headers.affinityToken);
-		/*if (response.headers.sendStatus === '1') {
+		console.log("sendStatus : "+body);
+		if (response.headers.sendStatus === '1') {
 			getMessageForFb(response.headers.sessionKey, response.headers.sessionId, response.headers.affinityToken, senderID, seq);
-		}*/
+		}
 		
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
