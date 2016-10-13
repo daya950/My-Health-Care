@@ -1,7 +1,7 @@
 'use strict';
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
-var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BAJCv2Sweh7vBA7mvhUmagSREiw3704yvTLlpYuSrPyXL6QI0CPO6QGlDfBAssCU8plLIt9nnsgXFsmfmVybdz4n1c5UNpEaw7g6IuNwoC9jI7YPgnI2lpdKpTebKvgZBdFJ1KIxFpZCmWnYjd0ze0RKxn5xQZDZD';
+var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BABZBQ4RT2ZBWhSnRuUl19vEf56vgZCMak8OTa9fO9de5bMjvgEQAuuh0rgoj7qyZBP2MZA9ZAk2PVd84AtgOUgoZBpS2pNjF5Vzida2DmOHl9PStVmuXAZCW94ZA7UElJEWxfrhfnZAck4slIxvb5tEwutWDcJvKeIZAAZDZD';
 var seq = 0;
 
 var bodyParser = require('body-parser'), 
@@ -113,8 +113,22 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
-function getMessageForFb(recId) {
-	
+function getMessageForFb(key, id, token, recId, sequence) {
+	request({
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
+		method : 'GET',
+		body: '{"key" : '+key+', "id" : '+id+', "token" : '+token+', "recId" : '+recId+', "seq" : '+sequence+'}'
+
+	}, function(error, response, body) {
+		if (!error && response.statusCode === 200) {
+			sendTextMessage(recId, response.headers.sfdcmsg);
+			seq = response.headers.seq;
+			console.log("Message Sent");
+		} else {
+			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+		}
+	});
+	getMessageForFb(key, id, token, recId, seq);
 }
 
 
@@ -136,16 +150,17 @@ function receivedMessage(event) {
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
-	}, function(error, response, body) {
-		//console.log('MMMMMM '+response.status123);
-		console.log('NNNNNN STATUS123 '+response.headers.status123);
+	}, function (error, response, body) {
+		if (response.headers.sendStatus === '1') {
+			getMessageForFb(response.headers.sessionKey, response.headers.sessionId, response.headers.affinityToken, senderID, seq);
+		}
+		
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
 		} else {
 			console.error("Error Occured in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	getMessageForFb(senderID);
 }
 
 
