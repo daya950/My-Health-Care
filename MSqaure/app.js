@@ -2,6 +2,7 @@
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
 var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BAJCv2Sweh7vBA7mvhUmagSREiw3704yvTLlpYuSrPyXL6QI0CPO6QGlDfBAssCU8plLIt9nnsgXFsmfmVybdz4n1c5UNpEaw7g6IuNwoC9jI7YPgnI2lpdKpTebKvgZBdFJ1KIxFpZCmWnYjd0ze0RKxn5xQZDZD';
+var seq = 0;
 
 var bodyParser = require('body-parser'), 
 config = require('config'), 
@@ -131,6 +132,8 @@ function receivedMessage(event) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function(error, response, body) {
+		console.log(response);
+		console.log(response.headers);
 		if (!error && response.statusCode === 200) {
 			console.log(error+"  "+response.statusCode);
 		} else {
@@ -138,6 +141,7 @@ function receivedMessage(event) {
 		}
 	});
 }
+
 
 /*
  * Delivery Confirmation Event
