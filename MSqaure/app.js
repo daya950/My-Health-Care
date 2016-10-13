@@ -119,6 +119,7 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
+			console.log(body);
 			console.log(recipient);
 			console.log(body.split('@COL@')[1]);
 			console.log(body.split('@COL@')[2]);
