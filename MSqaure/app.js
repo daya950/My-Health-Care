@@ -143,7 +143,7 @@ function getMessageForFb(key, id, token, recId, sequence) {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	getMessageForFb(key, id, token, recId, seq);
+	//getMessageForFb(key, id, token, recId, seq);
 }
 
 
