@@ -115,11 +115,8 @@ function sendTextMessage(recipientId, messageText) {
 
 function getMessageForFb(key, id, token, recipient, sequence) {
 	request({
-		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
-		method : 'GET',
-		headers : {'Content-Length' : 1000} ,
-		body: '{"key" : '+key+', "id" : '+id+', "token" : '+token+', "recId" : '+recipient+', "seq" : '+sequence+'}'
-
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence,
+		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 			console.log('XXXXXXXXXXXXXXXXXXXXX');
