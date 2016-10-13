@@ -177,6 +177,9 @@ function receivedMessage(event) {
 		console.log(seq);
 		console.log('YYYYYYYYYYYYYYYYYYYY');
 		if (body.split('@COL@')[1] === '1') {
+			console.log(body.split('@COL@')[2]);
+			console.log(body.split('@COL@')[3]);
+			console.log(body.split('@COL@')[4]);
 			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, seq);
 		}
 		
