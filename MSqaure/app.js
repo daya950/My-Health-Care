@@ -119,13 +119,14 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
+			sendTextMessage(recipient, body.split('@COL@')[1]);
+			seq = body.split('@COL@')[2];
 			console.log("Message Sent");
-			console.log(body);
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	//getMessageForFb(key, id, token, recipient, seq);
+	getMessageForFb(key, id, token, recipient, seq);
 }
 
 
