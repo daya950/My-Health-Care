@@ -117,6 +117,7 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook',
 		method : 'GET',
+		headers : {'Content-Length' : 1000} ,
 		body: '{"key" : '+key+', "id" : '+id+', "token" : '+token+', "recId" : '+recipient+', "seq" : '+sequence+'}'
 
 	}, function(error, response, body) {
