@@ -119,7 +119,9 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
-			var sfdcmsg = body.split('@COL@')[1];
+			console.log(body);
+			console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+			/*var sfdcmsg = body.split('@COL@')[1];
 			sequenceNum = body.split('@COL@')[2];
 			if (sfdcmsg !== '') {
 				console.log(body);
@@ -130,7 +132,7 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 				console.log("Message Sent");				
 			} else {
 				console.log("Blank Message");
-			}
+			}*/
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
