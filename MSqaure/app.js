@@ -113,10 +113,10 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
-function getMessageForFb(key, id, token, recipient, sequence) {
-	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence);
+function getMessageForFb(key, id, token, recipient) {
+	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+seq);
 	request({
-		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence,
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+seq,
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
@@ -136,7 +136,7 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	setTimeout( function() {getMessageForFb(key, id, token, recipient, seq);}, 3000);
+	setTimeout( function() {getMessageForFb(key, id, token, recipient);}, 3000);
 }
 
 
