@@ -136,9 +136,9 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
 		}
 	});
-	if (typeof sequenceNum === "number") {
+	/*if (typeof sequenceNum === "number") {
 		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 10);		
-	}
+	}*/
 }
 
 
@@ -165,6 +165,7 @@ function receivedMessage(event) {
 	}, function (error, response, body) {
 		if (body.split('@COL@')[1] === '1') {
 			console.log('First Time');
+			console.log(recipientID);
 			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, 0);
 		}
 		
