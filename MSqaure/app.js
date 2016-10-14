@@ -131,7 +131,7 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	setInterval(getMessageForFb(key, id, token, recipient, seq),5000);
+	//setInterval(getMessageForFb(key, id, token, recipient, seq),5000);
 }
 
 
