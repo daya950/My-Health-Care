@@ -136,7 +136,7 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 		}
 	});
 	if (typeof sequenceNum === "number") {
-		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 3000);		
+		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 500);		
 	}
 }
 
