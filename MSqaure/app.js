@@ -2,7 +2,7 @@
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
 var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BABZBQ4RT2ZBWhSnRuUl19vEf56vgZCMak8OTa9fO9de5bMjvgEQAuuh0rgoj7qyZBP2MZA9ZAk2PVd84AtgOUgoZBpS2pNjF5Vzida2DmOHl9PStVmuXAZCW94ZA7UElJEWxfrhfnZAck4slIxvb5tEwutWDcJvKeIZAAZDZD';
-var seq = 0;
+var seq = '0';
 
 var bodyParser = require('body-parser'), 
 config = require('config'), 
