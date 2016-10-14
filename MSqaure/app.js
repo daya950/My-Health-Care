@@ -114,6 +114,7 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function getMessageForFb(key, id, token, recipient, sequence) {
+	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequence,
 		method : 'GET'
