@@ -128,13 +128,14 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 				sendTextMessage(recipient, sfdcmsg);
 				seq = body.split('@COL@')[2];
 				console.log("Message Sent");				
+			} else {
+				console.log("Blank Message");
 			}
-			console.log("Blank Message");
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	var myVar = setInterval(getMessageForFb(key, id, token, recipient, seq), 10000);
+	setTimeout( function() {getMessageForFb(key, id, token, recipient, seq);}, 3000);
 }
 
 
