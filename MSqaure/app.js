@@ -133,7 +133,7 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 				console.log("Blank Message");
 			}
 		} else {
-			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
 		}
 	});
 	if (typeof sequenceNum === "number") {
