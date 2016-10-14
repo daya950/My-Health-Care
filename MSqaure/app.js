@@ -113,20 +113,21 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 function getMessageForFb(key, id, token, recipient, sequenceNum) {
-	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequenceNum);
+	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum,
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
 			var sfdcmsg = body.split('@COL@')[1];
+			sequenceNum = body.split('@COL@')[2];
+			console.log(sequenceNum);
 			if (sfdcmsg !== '') {
 				console.log(body);
 				console.log(recipient);
 				console.log(sfdcmsg);
 				console.log(body.split('@COL@')[2]);
 				sendTextMessage(recipient, sfdcmsg);
-				sequenceNum = body.split('@COL@')[2];
 				console.log("Message Sent");				
 			} else {
 				console.log("Blank Message");
