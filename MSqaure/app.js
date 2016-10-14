@@ -2,7 +2,7 @@
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
 var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BABZBQ4RT2ZBWhSnRuUl19vEf56vgZCMak8OTa9fO9de5bMjvgEQAuuh0rgoj7qyZBP2MZA9ZAk2PVd84AtgOUgoZBpS2pNjF5Vzida2DmOHl9PStVmuXAZCW94ZA7UElJEWxfrhfnZAck4slIxvb5tEwutWDcJvKeIZAAZDZD';
-var seq = '0';
+var seqNo = '0';
 
 var bodyParser = require('body-parser'), 
 config = require('config'), 
@@ -113,10 +113,10 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
-function getMessageForFb(key, id, token, recipient) {
-	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+seq);
+function getMessageForFb(key, id, token, recipient, sequenceNum) {
+	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequenceNum);
 	request({
-		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+seq,
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seq='+sequenceNum,
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
@@ -127,7 +127,7 @@ function getMessageForFb(key, id, token, recipient) {
 				console.log(sfdcmsg);
 				console.log(body.split('@COL@')[2]);
 				sendTextMessage(recipient, sfdcmsg);
-				seq = body.split('@COL@')[2];
+				sequenceNum = body.split('@COL@')[2];
 				console.log("Message Sent");				
 			} else {
 				console.log("Blank Message");
@@ -162,7 +162,7 @@ function receivedMessage(event) {
 		method : 'POST'
 	}, function (error, response, body) {
 		if (body.split('@COL@')[1] === '1') {
-			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, seq);
+			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, seqNo);
 		}
 		
 		if (!error && response.statusCode === 200) {
