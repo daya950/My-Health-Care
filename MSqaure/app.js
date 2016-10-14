@@ -121,6 +121,8 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 		if (!error && response.statusCode === 200) {
 			console.log(body);
 			console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+			sequenceNum = body.split('@COL@')[3];
+			console.log(sequenceNum);
 			/*var sfdcmsg = body.split('@COL@')[1];
 			sequenceNum = body.split('@COL@')[2];
 			if (sfdcmsg !== '') {
