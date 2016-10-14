@@ -130,14 +130,14 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 				console.log("Message Sent");				
 			} else {
 				console.log("Blank Message");
-				console.log(sequenceNum);
-				console.log(body.split('@COL@')[2]);
 			}
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	//setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 3000);
+	if (typeof sequenceNum === "number") {
+		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 3000);		
+	}
 }
 
 
