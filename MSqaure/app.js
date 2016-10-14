@@ -119,19 +119,22 @@ function getMessageForFb(key, id, token, recipient, sequence) {
 		method : 'GET'
 	}, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
-			console.log(body);
-			console.log(recipient);
-			console.log(body.split('@COL@')[1]);
-			console.log(body.split('@COL@')[2]);
-			console.log("Message Sent");
-			sendTextMessage(recipient, body.split('@COL@')[1]);
-			seq = body.split('@COL@')[2];
-			console.log("Message Sent");
+			var sfdcmsg = body.split('@COL@')[1];
+			if (sfdcmsg !== '') {
+				console.log(body);
+				console.log(recipient);
+				console.log(sfdcmsg);
+				console.log(body.split('@COL@')[2]);
+				sendTextMessage(recipient, sfdcmsg);
+				seq = body.split('@COL@')[2];
+				console.log("Message Sent");				
+			}
+			console.log("Blank Message");
 		} else {
 			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
 	});
-	//setInterval(getMessageForFb(key, id, token, recipient, seq),5000);
+	var myVar = setInterval(getMessageForFb(key, id, token, recipient, seq), 10000);
 }
 
 
