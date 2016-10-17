@@ -166,6 +166,7 @@ function receivedMessage(event) {
 		if (body.split('@COL@')[1] === '1') {
 			console.log('First Time');
 			console.log(recipientID);
+			console.log(senderID);
 			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, 0);
 		}
 		
