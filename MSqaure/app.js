@@ -130,7 +130,7 @@ function getMessageForFb(key, token, recipient, sequenceNum) {
 				console.log("Message Sent");				
 			} else {
 				console.log(body);
-				setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 10);	
+				setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 10000);	
 			}
 		} else {
 			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
