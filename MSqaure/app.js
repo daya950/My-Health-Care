@@ -112,21 +112,20 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
-function getMessageForFb(key, id, token, recipient, sequenceNum) {
+function getMessageForFb(key, token, recipient, sequenceNum) {
 	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum,
 		method : 'GET'
 	}, function(error, response, body) {
-		if (!error && response.statusCode === 200) {
-			console.log(body);
+		/*if (!error && response.statusCode === 200) {
 			var sfdcmsg = body.split('@COL@')[1];
 			sequenceNum = body.split('@COL@')[2];
 			if (sfdcmsg !== '') {
 				console.log(body);
 				console.log(recipient);
 				console.log(sfdcmsg);
-				console.log(body.split('@COL@')[2]);
+				console.log(sequenceNum);
 				//sendTextMessage(recipient, sfdcmsg);
 				console.log("Message Sent");				
 			} else {
@@ -134,7 +133,8 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 			}
 		} else {
 			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
-		}
+		}*/
+		console.log("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
 	});
 	/*if (typeof sequenceNum === "number") {
 		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 10);		
@@ -164,16 +164,13 @@ function receivedMessage(event) {
 		method : 'POST'
 	}, function (error, response, body) {
 		if (body.split('@COL@')[1] === '1') {
-			console.log('First Time');
-			console.log(recipientID);
-			console.log(senderID);
-			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], body.split('@COL@')[4], senderID, 0);
+			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], senderID, 0);
 		}
 		
 		if (!error && response.statusCode === 200) {
-			console.log(error+"  "+response.statusCode);
+			console.log("Message to Salesforce Agent Have been Successfully Sent");
 		} else {
-			console.error("Error Occured in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
+			console.error("Error Occured in Sending Message to  Salesforce Agent in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
 		}
 	});
 }
