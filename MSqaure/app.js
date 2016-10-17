@@ -129,9 +129,9 @@ function getMessageForFb(key, token, recipient, sequenceNum) {
 				sendTextMessage(recipient, sfdcmsg);
 				console.log("Message Sent");				
 			} else {
-				console.log(body);
-				setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 10000);	
+				console.log(body);	
 			}
+			setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 1000);
 		} else {
 			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
 		}
