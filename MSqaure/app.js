@@ -127,7 +127,7 @@ function getMessageForFb(key, id, token, recipient, sequenceNum) {
 				console.log(recipient);
 				console.log(sfdcmsg);
 				console.log(body.split('@COL@')[2]);
-				sendTextMessage(recipient, sfdcmsg);
+				//sendTextMessage(recipient, sfdcmsg);
 				console.log("Message Sent");				
 			} else {
 				console.log("Blank Message");
