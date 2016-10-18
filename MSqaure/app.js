@@ -159,6 +159,7 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
 	var b = '';
+	var a = '';
 	
 	/*
 	 * To get Chat Type
@@ -171,7 +172,7 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+JSON.parse(body));
-			var a = JSON.parse(body);
+			a = JSON.parse(body);
 			b = a.chatType;
 		});
 		console.log('OK '+b);
