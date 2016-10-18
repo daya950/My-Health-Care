@@ -170,9 +170,9 @@ function receivedMessage(event) {
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'			
 		}, function (error, response, body) {
-			console.log(body);
-			console.log(response.chatType);
-			console.log(response);
+			console.log('BODY_XXX : '+body);
+			console.log('RES_CHAT_TYPE_XXX : '+response.chatType);
+			console.log('RES_XXX : '+response);
 			chatType = body.split("\"")[1];
 		});
 		console.log(chatType);
