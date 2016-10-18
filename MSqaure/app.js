@@ -166,6 +166,7 @@ function receivedMessage(event) {
 	console.log(message);
 	if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
 		console.log('inside');
+		console.log('https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID);
 		request({
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'
