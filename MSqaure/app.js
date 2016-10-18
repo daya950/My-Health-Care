@@ -174,7 +174,7 @@ function receivedMessage(event) {
 		};
 		
 		var req = http.request(options, function(res) {
-			console.log('BODY_XXX : '+JSON.parse(res));
+			console.log('BODY_XXX : '+JSON.stringify(res));
 			console.log('RES_CHAT_TYPE_XXX : '+res.chatType);
 		});
 			
