@@ -174,7 +174,7 @@ function receivedMessage(event) {
 			console.log('BODY_XXXT : '+body);
 			console.log('RES_CHAT_TYPE_XXXT : '+response.chatType);
 			console.log('RES_XXXT : '+response);
-			chatType = body.split("\"")[1];
+			chatType = body;
 		});
 		console.log(chatType);
 		if (chatType === 'EM') {
