@@ -172,9 +172,9 @@ function receivedMessage(event) {
 			dataType: 'application/json',			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
-			chatType = body;
+			chatType = JSON.stringify(body);
 		});
-		console.log(chatType);
+		console.log('OK '+chatType);
 		if (chatType === 'EM') {
 			console.log('inside');
 			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
