@@ -171,7 +171,9 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
-			chatType = JSON.stringify(body);
+			var buffer = new Buffer(body);
+			var bufferBase64 = buffer.toString('base64');
+			chatType = bufferBase64;
 		});
 		console.log('OK '+chatType);
 		if (chatType === 'EM') {
