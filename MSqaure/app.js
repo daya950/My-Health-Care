@@ -163,14 +163,18 @@ function receivedMessage(event) {
 	/*
 	 * To get Chat Type
 	 */
+	console.log(message);
 	if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
+		console.log('inside');
 		request({
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID
 		}, function (body) {
+			console.log(body);
 			if (body === 'EM') {
-				sendTextMessage(senderID, 'Hello User, Send "Query" for any query or "Agent" to chat with live agent.');
+				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 			}
 		});
+		console.log('outside');
 	}
 	
 /*	request({
