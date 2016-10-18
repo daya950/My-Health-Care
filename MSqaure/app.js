@@ -172,7 +172,7 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
-			console.log('BODY_XXXY : '+body.split("\"")[0]);
+			console.log('BODY_XXXY : '+body.split('"')[0]);
 		});
 		if (b === 'EM') {
 			console.log('inside');
