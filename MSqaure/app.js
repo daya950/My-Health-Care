@@ -171,7 +171,7 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('Start '+body.split('@')[1]);
-			if (chatType === body.split('@')[1]) {
+			if ('EM' === body.split('@')[1]) {
 				console.log('inside '+chatType);
 				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 			}
