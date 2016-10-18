@@ -158,8 +158,7 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	var b = '';
-	var a = '';
+	var chatType = '';
 	
 	/*
 	 * To get Chat Type
@@ -171,14 +170,11 @@ function receivedMessage(event) {
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'			
 		}, function (error, response, body) {
-			console.log('BODY_XXXT : '+body);
-			console.log('BODY_XXXY : '+body.split('@')[1]);
+			chatType = body.split('@')[1];
 		});
-		if (b === 'EM') {
-			console.log('inside');
+		if (chatType === 'EM') {
 			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 		}
-		console.log('outside');
 	}
 	
 	/*request({
