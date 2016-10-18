@@ -174,9 +174,9 @@ function receivedMessage(event) {
 			console.log('BODY_XXXT : '+JSON.parse(body));
 			a = JSON.parse(body);
 			b = a.chatType;
+			console.log('OK '+b);
+			console.log('NOT OK '+a);
 		});
-		console.log('OK '+b);
-		console.log('NOT OK '+a);
 		if (b === 'EM') {
 			console.log('inside');
 			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
