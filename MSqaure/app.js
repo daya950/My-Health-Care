@@ -173,7 +173,7 @@ function receivedMessage(event) {
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+JSON.parse(body));
 			a = JSON.parse(body);
-			b = a.chatType;
+			b = a['chatType'];
 			console.log('OK '+b);
 			console.log('NOT OK '+a);
 		});
