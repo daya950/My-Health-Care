@@ -171,7 +171,7 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
-			chatType = JSON.stringify(body);
+			chatType = body.chatType;
 		});
 		console.log('OK '+chatType);
 		if (chatType === 'EM') {
