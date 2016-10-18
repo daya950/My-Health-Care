@@ -7,7 +7,7 @@ var bodyParser = require('body-parser'),
 config = require('config'), 
 crypto = require('crypto'), 
 express = require('express'), 
-http = require('http'), 
+http = require('http'),
 request = require('request');
 
 function verifyRequestSignature(req, res, buf) {
@@ -167,7 +167,33 @@ function receivedMessage(event) {
 	if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
 		console.log('inside');
 		console.log('https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID);
-		request({
+		
+		var options = {
+		  host: 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID
+		};
+
+		var req = http.get(options, function(res) {
+		  console.log('STATUS_XXX: ' + res.statusCode);
+		  console.log('HEADERS_XXX: ' + JSON.stringify(res.headers));
+
+		  // Buffer the body entirely for processing as a whole.
+		  var bodyChunks = [];
+		  res.on('data', function(chunk) {
+		    // You can process streamed parts here...
+		    bodyChunks.push(chunk);
+		  }).on('end', function() {
+		    var body = Buffer.concat(bodyChunks);
+		    console.log('BODY: ' + body);
+		    // ...and/or process the entire body here.
+		  });
+		});
+
+		req.on('error', function(e) {
+		  console.log('ERROR: ' + e.message);
+		});
+		
+		
+		/*request({
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'
 		}, function (error, response, body) {
@@ -178,7 +204,7 @@ function receivedMessage(event) {
 				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 			}
 		});
-		console.log('outside');
+		console.log('outside');*/
 	}
 	
 /*	request({
