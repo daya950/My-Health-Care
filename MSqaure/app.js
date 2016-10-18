@@ -171,9 +171,9 @@ function receivedMessage(event) {
 			method : 'GET',
 			dataType: 'application/json',			
 		}, function (error, response, body) {
-			console.log('BODY_XXX : '+body);
-			console.log('RES_CHAT_TYPE_XXX : '+response.chatType);
-			console.log('RES_XXX : '+response);
+			console.log('BODY_XXXT : '+body);
+			console.log('RES_CHAT_TYPE_XXXT : '+response.chatType);
+			console.log('RES_XXXT : '+response);
 			chatType = body.split("\"")[1];
 		});
 		console.log(chatType);
