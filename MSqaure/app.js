@@ -172,8 +172,9 @@ function receivedMessage(event) {
 		}, function (error, response, body) {
 			chatType = body.split("\"");
 		});
-		
+		console.log(chatType);
 		if (chatType === 'EM') {
+			console.log('inside');
 			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 		}
 		console.log('outside');
