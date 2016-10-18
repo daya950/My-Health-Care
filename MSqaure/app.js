@@ -168,8 +168,7 @@ function receivedMessage(event) {
 		
 		request({
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
-			method : 'GET',
-			dataType: 'application/json',			
+			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
 			chatType = JSON.stringify(body);
