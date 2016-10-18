@@ -171,9 +171,8 @@ function receivedMessage(event) {
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'			
 		}, function (error, response, body) {
-			console.log('BODY_XXXT : '+JSON.parse(body));
-			console.log('OK '+a.chatType);
-			console.log('NOT OK '+a);
+			console.log('BODY_XXXT : '+body);
+			console.log('BODY_XXXY : '+body.split("\"")[0]);
 		});
 		if (b === 'EM') {
 			console.log('inside');
