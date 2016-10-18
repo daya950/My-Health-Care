@@ -163,28 +163,13 @@ function receivedMessage(event) {
 	/*
 	 * To get Chat Type
 	 */
-		var options = {
-			host: 'msquare-developer-edition.ap2.force.com',
-			path: '/services/apexrest/fbsfdcchatdb?recId='+senderID,
-			method: 'GET',
-			dataType: 'application/json',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			}
-		};
-		
-		var req = http.request(options, function(res) {
-			console.log('BODY_XXX : '+JSON.stringify(res));
-			console.log('RES_CHAT_TYPE_XXX : '+res.chatType);
-		});
-			
-			req.end();
-			/*if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
+		if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
 		console.log('https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID);
 		
 		request({
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
-			method : 'GET'			
+			method : 'GET',
+			dataType: 'application/json',			
 		}, function (error, response, body) {
 			console.log('BODY_XXX : '+body.chatType);
 			console.log('RES_CHAT_TYPE_XXX : '+response.chatType);
@@ -199,7 +184,7 @@ function receivedMessage(event) {
 		console.log('outside');
 	}
 	
-	request({
+	/*request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function (error, response, body) {
