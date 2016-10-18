@@ -163,13 +163,11 @@ function receivedMessage(event) {
 	/*
 	 * To get Chat Type
 	 */
-	console.log(message);
 	if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
-		console.log('inside');
 		console.log('https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID);
 		
 		var options = {
-		  host: 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID
+		  host: 'msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID
 		};
 
 		var req = http.get(options, function(res) {
