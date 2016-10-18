@@ -158,9 +158,22 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	var arr;
+	var chatType;
 	
-	request({
+	/*
+	 * To get Chat Type
+	 */
+	if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
+		request({
+			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID
+		}, function (body) {
+			if (body === 'EM') {
+				sendTextMessage(senderID, 'Hello User, Send "Query" for any query or "Agent" to chat with live agent.');
+			}
+		});
+	}
+	
+/*	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
 		method : 'POST'
 	}, function (error, response, body) {
@@ -173,7 +186,7 @@ function receivedMessage(event) {
 		} else {
 			console.error("Error Occured in Sending Message to  Salesforce Agent in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
 		}
-	});
+	});*/
 }
 
 
