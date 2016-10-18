@@ -170,11 +170,12 @@ function receivedMessage(event) {
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'			
 		}, function (error, response, body) {
-			chatType = body.split('@')[1];
+			console.log('Start '+body.split('@')[1]);
+			if (chatType === body.split('@')[1]) {
+				console.log('inside '+chatType);
+				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
+			}
 		});
-		if (chatType === 'EM') {
-			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
-		}
 	}
 	
 	/*request({
