@@ -172,8 +172,6 @@ function receivedMessage(event) {
 			dataType: 'application/json',			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+body);
-			console.log('RES_CHAT_TYPE_XXXT : '+response.chatType);
-			console.log('RES_XXXT : '+response);
 			chatType = body;
 		});
 		console.log(chatType);
