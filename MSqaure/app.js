@@ -158,7 +158,7 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	var chatType;
+	var b = '';
 	
 	/*
 	 * To get Chat Type
@@ -171,10 +171,12 @@ function receivedMessage(event) {
 			method : 'GET'			
 		}, function (error, response, body) {
 			console.log('BODY_XXXT : '+JSON.parse(body));
-			chatType = JSON.parse(body).chatType;
+			var a = JSON.parse(body);
+			b = a.chatType;
 		});
-		console.log('OK '+chatType);
-		if (chatType === 'EM') {
+		console.log('OK '+b);
+		console.log('NOT OK '+a);
+		if (b === 'EM') {
 			console.log('inside');
 			sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 		}
