@@ -170,9 +170,9 @@ function receivedMessage(event) {
 			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 			method : 'GET'
 		}, function (error, response, body) {
-			console.log(body);
-			console.log(response);
-			console.log(error);
+			console.log('BODY_XXX : '+body);
+			console.log('RESPONSE_XXX : '+response);
+			console.log('ERROR_XXX : '+error);
 			/*if (body === 'EM') {
 				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 			}*/
