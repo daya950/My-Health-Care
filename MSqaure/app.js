@@ -146,7 +146,7 @@ function sendMessageKmToFb(recId, message) {
 		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message,
 		method : 'GET'			
 	}, function (error, response, body) {
-		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+body.results[0].excerpt);
+		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+typeof(body));
 		sendTextMessage(recId, body);
 	});
 }
