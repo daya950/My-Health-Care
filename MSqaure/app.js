@@ -148,7 +148,7 @@ function sendMessageKmToFb(recId, message) {
 	}, function (error, response, body) {
 		var data = JSON.parse(body);
 		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+data.results[0].excerpt);
-		sendTextMessage(recId, body);
+		sendTextMessage(recId, data.results[0].excerpt);
 	});
 }
 
