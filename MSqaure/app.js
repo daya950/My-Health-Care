@@ -112,36 +112,60 @@ function sendTextMessage(recipientId, messageText) {
 	callSendAPI(messageData);
 }
 
-function getMessageForFb(key, token, recipient, sequenceNum) {
+function getMessageAndSendToFb(recipient, sequenceNum) {
 	console.log('URL : https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum,
 		method : 'GET'
 	}, function(error, response, body) {
-		/*if (!error && response.statusCode === 200) {
-			var sfdcmsg = body.split('@COL@')[1];
-			sequenceNum = body.split('@COL@')[2];
-			if (sfdcmsg !== '@ROW@') {
-				console.log(body);
-				console.log(recipient);
-				console.log(sfdcmsg);
-				console.log(sequenceNum);
-				sendTextMessage(recipient, sfdcmsg);
-				console.log("Message Sent");				
-			} else {
-				console.log(body);	
-			}
-			setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 1000);
-		} else {
-			console.error("Failed calling Send API", response.statusCode+'XXXXXX'+response.statusMessage+'XXXXXX'+body.error);
-		}*/
-		setTimeout( function() {getMessageForFb(key, token, recipient, sequenceNum);}, 1000);
+		setTimeout( function() {getMessageAndSendToFb(recipient, sequenceNum);}, 1000);
 	});
-	/*if (typeof sequenceNum === "number") {
-		setTimeout( function() {getMessageForFb(key, id, token, recipient, sequenceNum);}, 10);		
-	}*/
 }
 
+
+/*
+ * To Insert Session Details in Salesforce Database 
+ */
+function insertSessionDetails(recId, chatType) {
+	request({
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+recId+'&chatType='+chatType,
+		method : 'POST'			
+	}, function (error, response, body) {
+		console.log('METHOD : insertSessionDetails\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY : '+body);
+		if (chatType === '@LA@') {
+			getMessageAndSendToFb(recId, 0);
+		}
+	});
+}
+
+/*
+ * To Send Message to Facebook User from Knowledge Center 
+ */
+function sendMessageKmToFb(recId, message) {
+	request({
+		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message,
+		method : 'GET'			
+	}, function (error, response, body) {
+		sendTextMessage(recId, body);
+	});
+}
+
+
+/*
+ * To Send Message from Facebook User to  Salesforce Live Agent
+ */
+function sendMessageFbToSfdc(recId, message) {
+	request({
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+recId,
+		method : 'POST'
+	}, function (error, response, body) {
+		if (!error && response.statusCode === 200) {
+			console.log("Message to Salesforce Agent Have been Successfully Sent");
+		} else {
+			console.error("Error Occured in Sending Message to  Salesforce Agent in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
+		}
+	});
+}
 
 /*
  * Message Event
@@ -149,56 +173,42 @@ function getMessageForFb(key, token, recipient, sequenceNum) {
  * This event is called when a message is sent to your page. The 'message'
  * object format can vary depending on the kind of message that was received.
  * 
- * If we receive a message with an attachment (image, video, audio), then we'll
- * simply confirm that we've received the attachment.
- * 
  */
 function receivedMessage(event) { 
 	var senderID = event.sender.id;
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	var chatType = '';
 	
-	/*
-	 * To get Chat Type
-	 */
-		if ((message.toLowerCase() !== 'query') || (message.toLowerCase() !== 'agent')) {
-		console.log('https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID);
-		
-		request({
-			uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
-			method : 'GET'			
-		}, function (error, response, body) {
-			console.log('Start '+body.split('@')[1]);
-			if ('EM' === body.split('@')[1]) {
-				console.log('inside '+chatType);
+
+	request({
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
+		method : 'GET'			
+	}, function (error, response, body) {
+		if (body.split('@')[1] === 'EM') {
+			if (message === 'query') {
+				insertSessionDetails(senderID, '@CQ@');
+				sendTextMessage(senderID, 'Please send your query');
+			} else if (message === 'agent') {
+				insertSessionDetails(senderID, '@LA@');
+				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
+			} else {
 				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
 			}
-		});
-	}
-	
-	/*request({
-		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?text='+message+'&recId='+senderID,
-		method : 'POST'
-	}, function (error, response, body) {
-		if (body.split('@COL@')[1] === '1') {
-			getMessageForFb(body.split('@COL@')[2], body.split('@COL@')[3], senderID, 0);
-		}
-		
-		if (!error && response.statusCode === 200) {
-			console.log("Message to Salesforce Agent Have been Successfully Sent");
+		} else if (body.split('@')[1] === 'CQ') {
+			sendMessageKmToFb(senderID, message);
 		} else {
-			console.error("Error Occured in Sending Message to  Salesforce Agent in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
+			sendMessageFbToSfdc(senderID, message);
 		}
-	});*/
+	});
 }
+
 
 
 /*
  * Delivery Confirmation Event
  * 
- * This event is sent to confirm the delivery of a message. Read more about
+ * This event is sent to confirm the delivery of a message.
  * 
  */
 function receivedDeliveryConfirmation(event) {
