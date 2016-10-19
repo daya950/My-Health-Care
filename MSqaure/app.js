@@ -127,9 +127,6 @@ function getMessageAndSendToFb(recipient, sequenceNum) {
  * To Insert Session Details in Salesforce Database 
  */
 function insertSessionDetails(recId, chatType) {
-	console.log('REC ID : '+recId);
-	console.log('CHAT TYPE : '+chatType);
-	console.log('URL : '+'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+recId+'&chatType='+chatType);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+recId+'&chatType='+chatType,
 		method : 'POST'			
@@ -149,6 +146,7 @@ function sendMessageKmToFb(recId, message) {
 		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message,
 		method : 'GET'			
 	}, function (error, response, body) {
+		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY : '+body);
 		sendTextMessage(recId, body);
 	});
 }
