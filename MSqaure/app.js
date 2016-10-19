@@ -146,9 +146,9 @@ function sendMessageKmToFb(recId, message) {
 		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message,
 		method : 'GET'			
 	}, function (error, response, body) {
-		var data = JSON.parse(body);
-		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+data.results[0].excerpt.replace(/<[^>]+>/gm, ''));
-		sendTextMessage(recId, data.results[0].excerpt);
+		var data = JSON.parse(body).results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');		
+		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+data);
+		sendTextMessage(recId, data);
 	});
 }
 
