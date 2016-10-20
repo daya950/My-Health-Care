@@ -119,7 +119,7 @@ function getMessageAndSendToFb(recipient, sequenceNum) {
 		method : 'GET'
 	}, function(error, response, body) {
 		console.log(body);
-		if (body == '1') {
+		if (body === '1') {
 			setTimeout( function() {getMessageAndSendToFb(recipient, sequenceNum);}, 1000);	
 		}
 	});
@@ -174,7 +174,7 @@ function sendMessageFbToSfdc(recId, message) {
 		if (!error && response.statusCode === 200) {
 			console.log("Message to Salesforce Agent Have been Successfully Sent");
 		} else {
-			console.error("Error Occured in Sending Message to  Salesforce Agent in receivedMessage Function ", response.statusCode, response.statusMessage, body.error);
+			console.error("Error Occured in Sending Message to  Salesforce Agent in sendMessageFbToSfdc Function ", response.statusCode, response.statusMessage, body.error);
 		}
 	});
 }
