@@ -118,7 +118,10 @@ function getMessageAndSendToFb(recipient, sequenceNum) {
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/sfdcwebhook?recId='+recipient+'&seqNum='+sequenceNum,
 		method : 'GET'
 	}, function(error, response, body) {
-		setTimeout( function() {getMessageAndSendToFb(recipient, sequenceNum);}, 1000);
+		console.log(body);
+		if (body == '1') {
+			setTimeout( function() {getMessageAndSendToFb(recipient, sequenceNum);}, 1000);	
+		}
 	});
 }
 
