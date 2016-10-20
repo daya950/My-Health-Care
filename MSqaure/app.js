@@ -119,7 +119,7 @@ function getMessageAndSendToFb(recipient, sequenceNum) {
 		method : 'GET'
 	}, function(error, response, body) {
 		console.log(body);
-		if (body === '1') {
+		if (body.split('@')[1] === '1') {
 			setTimeout( function() {getMessageAndSendToFb(recipient, sequenceNum);}, 1000);	
 		}
 	});
