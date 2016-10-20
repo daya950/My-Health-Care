@@ -148,7 +148,7 @@ function sendMessageKmToFb(recId, message) {
 	}, function (error, response, body) {
 		var data = JSON.parse(body);
 		var msg;
-		if (data.has("results")) {
+		if (data.hasOwnProperty('results')) {
 			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
 	    } else {
 	    	msg = 'SMJH JA';
