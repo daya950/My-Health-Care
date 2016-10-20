@@ -1,7 +1,7 @@
 'use strict';
 var APP_SECRET = 'e658fe4b775b4c04913c5a15a4169781';
 var VALIDATION_TOKEN = 'MY_CHAT_TOKEN';
-var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BABZBQ4RT2ZBWhSnRuUl19vEf56vgZCMak8OTa9fO9de5bMjvgEQAuuh0rgoj7qyZBP2MZA9ZAk2PVd84AtgOUgoZBpS2pNjF5Vzida2DmOHl9PStVmuXAZCW94ZA7UElJEWxfrhfnZAck4slIxvb5tEwutWDcJvKeIZAAZDZD';
+var PAGE_ACCESS_TOKEN = 'EAAZAxj43rP40BAJXclaxYtgWIWDRRuCr0zeqxVR20lOQye7dIzkcAWWGv0SQN6nT7Ne1nMNr3ANpqabObqsZAMuSrhRR38krOcxDIfcMPBgRU8Xp4jgXmgbCoMNyHA6MZBokp9mEilytDiOfObHEmC4omRqzJ7OyoEW6XjYSQZDZD';
 
 var bodyParser = require('body-parser'), 
 config = require('config'), 
@@ -143,11 +143,17 @@ function insertSessionDetails(recId, chatType) {
  */
 function sendMessageKmToFb(recId, message) {
 	request({
-		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message,
+		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message+'&type=narrow&fac=CMS-CHANNEL.FAQ',
 		method : 'GET'			
 	}, function (error, response, body) {
-		var data = JSON.parse(body).results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');		
-		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+data);
+		var data = JSON.parse(body);
+		var msg;
+		if (data.has("results")) {
+			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
+	    } else {
+	    	msg = 'SMJH JA';
+	    }
+		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+msg);
 		sendTextMessage(recId, data);
 	});
 }
@@ -188,17 +194,15 @@ function receivedMessage(event) {
 		method : 'GET'			
 	}, function (error, response, body) {
 		if (body.split('@')[1] === 'EM') {
-			if (message === 'query') {
+				sendTextMessage(senderID, 'Hello User, Ask your query or type \"Agent\" for live chat with one of our Representative.');
 				insertSessionDetails(senderID, '@CQ@');
-				sendTextMessage(senderID, 'Please send your query');
-			} else if (message === 'agent') {
+		} else if (body.split('@')[1] === 'CQ') {
+			if (message === 'agent') {
 				insertSessionDetails(senderID, '@LA@');
 				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 			} else {
-				sendTextMessage(senderID, 'Hello User, Send \"Query\" for any query or \"Agent\" to chat with live agent.');
+				sendMessageKmToFb(senderID, message);				
 			}
-		} else if (body.split('@')[1] === 'CQ') {
-			sendMessageKmToFb(senderID, message);
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
