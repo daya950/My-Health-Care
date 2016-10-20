@@ -151,10 +151,11 @@ function sendMessageKmToFb(recId, message) {
 		if (data.hasOwnProperty('results')) {
 			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
 	    } else {
-	    	msg = 'SMJH JA';
+	    	insertSessionDetails(recId, '@LA@');
+			sendTextMessage(recId, 'We are unable to find results for your query, One of our Representative has been connected to solve your queries, Start Conversation Now');
 	    }
 		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+msg);
-		sendTextMessage(recId, data);
+		sendTextMessage(recId, msg);
 	});
 }
 
