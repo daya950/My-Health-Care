@@ -204,11 +204,15 @@ function receivedMessage(event) {
 				sendTextMessage(senderID, 'Hello User, Ask your query or type \"Agent\" for live chat with one of our Representative.');
 				insertSessionDetails(senderID, '@CQ@');
 		} else if (body.split('@')[1] === 'CQ') {
-			if (message === 'agent') {
-				insertSessionDetails(senderID, '@LA@');
-				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
-			} else {
-				sendMessageKmToFb(senderID, message);				
+			try {
+				if (message === 'agent') {
+					insertSessionDetails(senderID, '@LA@');
+					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
+				} else {
+					sendMessageKmToFb(senderID, message);				
+				}
+			} catch (err) {
+			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else {
 			sendMessageFbToSfdc(senderID, message);
