@@ -192,7 +192,7 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
 	let match;
-	match = text.match(/help/i);
+	match = message.match(/help/i);
 	if(match) {
 		sendTextMessage(senderID, 'I am always here to help you');
 	}
