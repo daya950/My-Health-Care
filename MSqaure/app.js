@@ -191,8 +191,11 @@ function receivedMessage(event) {
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
-	
-
+	let match;
+	match = text.match(/help/i);
+	if(match) {
+		sendTextMessage(senderID, 'I am always here to help you');
+	}
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 		method : 'GET'			
