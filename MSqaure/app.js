@@ -129,9 +129,9 @@ function getMessageAndSendToFb(recipient, sequenceNum) {
 /*
  * To Insert Session Details in Salesforce Database 
  */
-function insertSessionDetails(recId, chatType) {
+function insertSessionDetails(recId, chatType, msg) {
 	request({
-		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+recId+'&chatType='+chatType,
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+recId+'&chatType='+chatType+'&message='+msg,
 		method : 'POST'			
 	}, function (error, response, body) {
 		console.log('METHOD : insertSessionDetails\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY : '+body);
@@ -146,7 +146,7 @@ function insertSessionDetails(recId, chatType) {
  */
 function sendMessageKmToFb(recId, message) {
 	request({
-		uri : 'http://50.202.96.113:91/infocenter/api/v1/search/?q='+message+'&type=narrow&fac=CMS-CHANNEL.FAQ',
+		uri : 'http://50.202.96.113:9226/infocenter/api/v1/search/?q='+message+'&type=narrow&fac=CMS-CHANNEL.FAQ',
 		method : 'GET'			
 	}, function (error, response, body) {
 		var data = JSON.parse(body);
@@ -154,7 +154,7 @@ function sendMessageKmToFb(recId, message) {
 		if (data.hasOwnProperty('results')) {
 			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
 	    } else {
-	    	insertSessionDetails(recId, '@LA@');
+	    	insertSessionDetails(recId, '@LA@','Nothing');
 			sendTextMessage(recId, 'We are unable to find results for your query, One of our Representative has been connected to solve your queries, Start Conversation Now');
 	    }
 		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+msg);
@@ -206,12 +206,12 @@ function receivedMessage(event) {
 						+'\nType \"agent\" to chat with our representative.');
 			} else if(message.match(/query/i)) {
 				sendTextMessage(senderID, 'Anytime you want to register a case Type \"case\" or type \"agent\" to chat with our representative.\n\nI am Listening, Ask your query');
-				insertSessionDetails(senderID, '@CQ@');
+				insertSessionDetails(senderID, '@CQ@', 'Nothing');
 			} else if(message.match(/case/i) || message.match(/issue/i)) {
-				insertSessionDetails(senderID, '@CC@');
+				insertSessionDetails(senderID, '@CC@','Nothing');
 				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complain and will get back to you soon after resolve it.');
 			} else if(message.match(/agent/i)) {
-				insertSessionDetails(senderID, '@LA@');
+				insertSessionDetails(senderID, '@LA@','Nothing');
 				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 			} else {
 				sendTextMessage(senderID, 'I am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case'
@@ -220,10 +220,10 @@ function receivedMessage(event) {
 		} else if (body.split('@')[1] === 'CQ') {
 			try {
 				if (message.match(/agent/i)) {
-					insertSessionDetails(senderID, '@LA@');
+					insertSessionDetails(senderID, '@LA@','Nothing');
 					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 				} else if (message.match(/case/i) || message.match(/issue/i)) {
-					insertSessionDetails(senderID, '@CC@');
+					insertSessionDetails(senderID, '@CC@','Nothing');
 					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern'
 									+'\n\nEnter your detailed issue to register a case');
 				} else {
@@ -233,7 +233,8 @@ function receivedMessage(event) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else if (body.split('@')[1] === 'CC') {
-			sendTextMessage(senderID, 'We are unable to create case right now');
+			insertSessionDetails(senderID, '@CC@', message);
+			//sendTextMessage(senderID, 'We are unable to create case right now');
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
