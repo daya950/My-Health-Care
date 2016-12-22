@@ -199,16 +199,22 @@ function receivedMessage(event) {
 	}, function (error, response, body) {
 		var responseMsg;
 		if (body.split('@')[1] === 'EM') {
+			var textArray = ['Hello, how can i help you today','Hello, You look Preety today','Hi','Heyy','Hi, nice to see you'];
+			var randomNumber = Math.floor(Math.random()*textArray.length);
+			sendTextMessage(senderID, textArray);
+			sendTextMessage(senderID, randomNumber);
 			if((message.match(/hi/i)) || (message.match(/hello/i)) || (message.match(/heyy/i))) {
-				var textArray = ['Hello, how can i help you today','Hello, You look Preety today.','Hi','Heyy','Hi, nice to see you'];
+				var textArray = ['Hello, how can i help you today','Hello, You look Preety today','Hi','Heyy','Hi, nice to see you'];
 				var randomNumber = Math.floor(Math.random()*textArray.length);
 				sendTextMessage(senderID, textArray[randomNumber]);
 				sendTextMessage(senderID, \nSend 1 for any query \nSend 2 to create a case.');
 			} else if(message.match(/help/i)) {
 				sendTextMessage(senderID, 'I am always here to help you \nSend 1 for any query \nSend 2 to create a case.');
+			} else {
+				sendTextMessage(senderID, 'Hello User, Ask your query or type \"Agent\" for live chat with one of our Representative.');
+				insertSessionDetails(senderID, '@CQ@');
 			}
-			/*sendTextMessage(senderID, 'Hello User, Ask your query or type \"Agent\" for live chat with one of our Representative.');
-			insertSessionDetails(senderID, '@CQ@');*/
+			
 		} else if (body.split('@')[1] === 'CQ') {
 			try {
 				if (message === 'agent') {
