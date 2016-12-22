@@ -220,7 +220,7 @@ function receivedMessage(event) {
 					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 				} else if (message.match(/case/i) || message.match(/issue/i)) {
 					insertSessionDetails(senderID, '@CC@');
-					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern.\n';f you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern.');
+					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern');
 				} else {
 					sendMessageKmToFb(senderID, message);				
 				}
@@ -228,7 +228,7 @@ function receivedMessage(event) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else if (body.split('@')[1] === 'CC') {
-		
+			sendMessageFbToSfdc(senderID, 'We are unable to create case right now');
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
