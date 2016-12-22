@@ -194,31 +194,41 @@ function receivedMessage(event) {
 	let match;
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
-		method : 'GET'			
+		method : 'GET',
+		timeout: 60000
 	}, function (error, response, body) {
 		var responseMsg;
 		if (body.split('@')[1] === 'EM') {
 			if(message.match(/hi/i) || message.match(/hello/i) || message.match(/heyy/i)) {
-				var textArray = ['Hello, how can i help you today','Hello, You look Preety today','Hi','Heyy','Hi, nice to see you'];
+				var textArray = ['Hello, how can i help you today','Hi','Heyy','Hi, nice to see you'];
 				var randomNumber = Math.floor(Math.random()*textArray.length);
 				sendTextMessage(senderID, textArray[randomNumber]);
-			} else if(message.match(/help/i)) {
-				sendTextMessage(senderID, 'I am always here to help you \nSend 1 for any query \nSend 2 to create a case.');
-			} /*else {
-				sendTextMessage(senderID, 'Hello User, Ask your query or type \"Agent\" for live chat with one of our Representative.');
+				sendTextMessage(senderID, 'Type \"query\" if you have any query \nType \"case\" to register a case \nType \"agent\" to chat with our representative.');
+			} else if(message.match(/query/i)) {
+				sendTextMessage(senderID, 'Anytime you want to register a case Type \"case\" or type \"agent\" to chat with our representative.\n\nI am Listening, Ask your query');
 				insertSessionDetails(senderID, '@CQ@');
-			}*/
+			} else if(message.match(/case/i) || message.match(/issue/i)) {
+				insertSessionDetails(senderID, '@CC@');
+				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complain and will get back to you soon after resolve it.');
+			} else {
+				sendTextMessage(senderID, 'I am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case \nType \"agent\" to chat with our representative.');
+			}
 		} else if (body.split('@')[1] === 'CQ') {
 			try {
-				if (message === 'agent') {
+				if (message.match(/agent/i)) {
 					insertSessionDetails(senderID, '@LA@');
 					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
+				} else if (message.match(/case/i) || message.match(/issue/i)) {
+					insertSessionDetails(senderID, '@CC@');
+					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern.\n';f you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern.');
 				} else {
 					sendMessageKmToFb(senderID, message);				
 				}
 			} catch (err) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
+		} else if (body.split('@')[1] === 'CC') {
+		
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
