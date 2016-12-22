@@ -202,16 +202,20 @@ function receivedMessage(event) {
 			if(message.match(/hi/i) || message.match(/hello/i) || message.match(/heyy/i)) {
 				var textArray = ['Hello, how can i help you today','Hi','Heyy','Hi, nice to see you'];
 				var randomNumber = Math.floor(Math.random()*textArray.length);
-				sendTextMessage(senderID, textArray[randomNumber]);
-				sendTextMessage(senderID, 'Type \"query\" if you have any query \nType \"case\" to register a case \nType \"agent\" to chat with our representative.');
+				sendTextMessage(senderID, textArray[randomNumber]+'\n\nType \"query\" if you have any query \nType \"case\" to register a case '
+						+'\nType \"agent\" to chat with our representative.');
 			} else if(message.match(/query/i)) {
 				sendTextMessage(senderID, 'Anytime you want to register a case Type \"case\" or type \"agent\" to chat with our representative.\n\nI am Listening, Ask your query');
 				insertSessionDetails(senderID, '@CQ@');
 			} else if(message.match(/case/i) || message.match(/issue/i)) {
 				insertSessionDetails(senderID, '@CC@');
 				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complain and will get back to you soon after resolve it.');
+			} else if(message.match(/agent/i)) {
+				insertSessionDetails(senderID, '@LA@');
+				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 			} else {
-				sendTextMessage(senderID, 'I am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case \nType \"agent\" to chat with our representative.');
+				sendTextMessage(senderID, 'I am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case'
+						+'\nType \"agent\" to chat with our representative.');
 			}
 		} else if (body.split('@')[1] === 'CQ') {
 			try {
@@ -220,7 +224,8 @@ function receivedMessage(event) {
 					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 				} else if (message.match(/case/i) || message.match(/issue/i)) {
 					insertSessionDetails(senderID, '@CC@');
-					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern');
+					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern'
+									+'\n\nEnter your detailed issue to register a case');
 				} else {
 					sendMessageKmToFb(senderID, message);				
 				}
