@@ -192,7 +192,10 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message.text;
 	let match;
-	
+	var textArray = ['Hello, how can i help you today','Hello, You look Preety today','Hi','Heyy','Hi, nice to see you'];
+			var randomNumber = Math.floor(Math.random()*textArray.length);
+			sendTextMessage(senderID, textArray);
+			sendTextMessage(senderID, randomNumber);
 	request({
 		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbsfdcchatdb?recId='+senderID,
 		method : 'GET'			
