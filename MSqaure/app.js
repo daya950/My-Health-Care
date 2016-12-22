@@ -153,10 +153,10 @@ function sendMessageKmToFb(recId, message) {
 		var msg;
 		if (data.hasOwnProperty('results')) {
 			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
-	    } else {
-	    	insertSessionDetails(recId, '@LA@','Nothing');
+		} else {
+			insertSessionDetails(recId, '@LA@','Nothing');
 			sendTextMessage(recId, 'We are unable to find results for your query, One of our Representative has been connected to solve your queries, Start Conversation Now');
-	    }
+		}
 		console.log('METHOD : sendMessageKmToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+msg);
 		sendTextMessage(recId, msg);
 	});
@@ -234,7 +234,7 @@ function receivedMessage(event) {
 			}
 		} else if (body.split('@')[1] === 'CC') {
 			insertSessionDetails(senderID, '@CC@', message);
-			//sendTextMessage(senderID, 'We are unable to create case right now');
+			sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\n.');
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
