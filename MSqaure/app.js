@@ -228,7 +228,7 @@ function receivedMessage(event) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else if (body.split('@')[1] === 'CC') {
-			sendMessageFbToSfdc(senderID, 'We are unable to create case right now');
+			sendTextMessage(senderID, 'We are unable to create case right now');
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
