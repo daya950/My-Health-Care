@@ -208,7 +208,7 @@ function receivedMessage(event) {
 				sendTextMessage(senderID, 'Anytime you want to register a case Type \"case\" or type \"agent\" to chat with our representative.\n\nI am Listening, Ask your query');
 				insertSessionDetails(senderID, '@CQ@', 'Nothing');
 			} else if(message.match(/case/i) || message.match(/issue/i)) {
-				insertSessionDetails(senderID, '@CC@','Nothing');
+				insertSessionDetails(senderID, '@CR@','Nothing');
 				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complain and will get back to you soon after resolve it.');
 			} else if(message.match(/agent/i)) {
 				insertSessionDetails(senderID, '@LA@','Nothing');
@@ -223,7 +223,7 @@ function receivedMessage(event) {
 					insertSessionDetails(senderID, '@LA@','Nothing');
 					sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
 				} else if (message.match(/case/i) || message.match(/issue/i)) {
-					insertSessionDetails(senderID, '@CC@','Nothing');
+					insertSessionDetails(senderID, '@CR@','Nothing');
 					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern'
 									+'\n\nEnter your detailed issue to register a case');
 				} else {
@@ -232,7 +232,7 @@ function receivedMessage(event) {
 			} catch (err) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
-		} else if (body.split('@')[1] === 'CC') {
+		} else if (body.split('@')[1] === 'CR') {
 			sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\n.');
 			insertSessionDetails(senderID, '@CC@', message);
 		} else {
