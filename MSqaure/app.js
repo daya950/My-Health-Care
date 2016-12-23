@@ -240,7 +240,7 @@ function receivedMessage(event) {
 				insertSessionDetails(senderID, '@CQ@','Nothing');
 				sendTextMessage(senderID, 'Anytime you want to register a case Type \"case\" or type \"agent\" to chat with our representative.\n\nI am Listening, Ask your query');
 			} else {
-				sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\nI am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case'
+				sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\nType \"query\" if you have any query \nType \"case\" to register a case'
 						+'\nType \"agent\" to chat with our representative.');
 				insertSessionDetails(senderID, '@CC@', message);
 			}
