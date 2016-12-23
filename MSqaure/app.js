@@ -233,8 +233,8 @@ function receivedMessage(event) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else if (body.split('@')[1] === 'CC') {
-			insertSessionDetails(senderID, '@CC@', message);
 			sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\n.');
+			insertSessionDetails(senderID, '@CC@', message);
 		} else {
 			sendMessageFbToSfdc(senderID, message);
 		}
