@@ -233,7 +233,7 @@ function receivedMessage(event) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
 			}
 		} else if (body.split('@')[1] === 'CR') {
-			sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\n.I am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case'
+			sendTextMessage(senderID, 'Your Case Have been logged, Kindly Check your mail\n\nI am always here to help you \n\nType \"query\" if you have any query \nType \"case\" to register a case'
 						+'\nType \"agent\" to chat with our representative.');
 			insertSessionDetails(senderID, '@CC@', message);
 		} else {
