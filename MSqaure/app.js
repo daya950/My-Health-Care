@@ -248,8 +248,8 @@ function receivedMessage(event) {
 					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern'
 									+'\n\nEnter your detailed issue to register a case');
 				} else {
-					/*sendMessageKmToFb(senderID, message);*/
-					sendMessageSObjToFb(senderID, message);
+					sendMessageKmToFb(senderID, message);
+					/*sendMessageSObjToFb(senderID, message);*/
 				}
 			} catch (err) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
