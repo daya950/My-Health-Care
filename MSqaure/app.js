@@ -142,6 +142,27 @@ function insertSessionDetails(recId, chatType, msg) {
 }
 
 /*
+ * To Send Message to Facebook User from Salesforce Object 
+ */
+function sendMessageSObjToFb(recId, message) {
+	request({
+		uri : 'https://msquare-developer-edition.ap2.force.com/services/apexrest/fbchatdb?q='+message,
+		method : 'GET'			
+	}, function (error, response, body) {
+		var data = JSON.parse(body);
+		var msg;
+		if (data.hasOwnProperty('results')) {
+			msg = data.results[0].excerpt.replace(/<[^>]+>/gm, '').replace(/&nbsp;/g, ' ').replace(/&rsquo;/, '\'').replace(/(&ldquo;)|(&rdquo;)/g, '"');
+		} else {
+			insertSessionDetails(recId, '@LA@','Nothing');
+			sendTextMessage(recId, 'We are unable to find results for your query, One of our Representative has been connected to solve your queries, Start Conversation Now');
+		}
+		console.log('METHOD : sendMessageSObjToFb\nERROR : '+error+'\nRESPONSE : '+response+'\nBODY_EXCERPT : '+msg);
+		sendTextMessage(recId, msg);
+	});
+}
+
+/*
  * To Send Message to Facebook User from Knowledge Center 
  */
 function sendMessageKmToFb(recId, message) {
@@ -227,7 +248,8 @@ function receivedMessage(event) {
 					sendTextMessage(senderID, 'If you have more query feel free to type \"query\" or type \"agent\" to let our representative understand your concern'
 									+'\n\nEnter your detailed issue to register a case');
 				} else {
-					sendMessageKmToFb(senderID, message);				
+					/*sendMessageKmToFb(senderID, message);*/
+					sendMessageSObjToFb(senderID, message);
 				}
 			} catch (err) {
 			   sendTextMessage(senderID, 'I am not feeling good to tell you anything right now. Ask me later.');
