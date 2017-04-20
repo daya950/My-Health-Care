@@ -230,7 +230,7 @@ function receivedMessage(event) {
 				insertSessionDetails(senderID, '@CQ@', 'Nothing');
 			} else if(message.match(/case/i) || message.match(/issue/i)) {
 				insertSessionDetails(senderID, '@CR@','Nothing');
-				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complain and will get back to you soon after resolve it.');
+				sendTextMessage(senderID, 'Enter your detailed issue, we will register a complaint and will get back to you soon after resolve it.');
 			} else if(message.match(/agent/i)) {
 				insertSessionDetails(senderID, '@LA@','Nothing');
 				sendTextMessage(senderID, 'Agent Connected, Start Your Conversation');
